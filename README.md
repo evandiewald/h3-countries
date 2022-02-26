@@ -3,22 +3,8 @@ Simple Postgres dataset and functions for mapping h3 indices or coordinates to c
 
 ![example-query](static/example-query.png)
 
-## Functions
-Simple macros leverage `h3` and `postgis` extensions to enable common queries.
-- `h3_to_country_iso (_h3_index text) returns text`
-  - Description: Given an h3 index, returns the country ISO code that the hex lies in.
-  - Example Usage: `SELECT h3_to_country_iso('88a819462bfffff');` -> `BRA`.
-- `h3_to_country_name (_h3_index text) returns text`
-  - Description: Given an h3 index, returns the country name that the hex lies in.
-  - Example Usage: `SELECT h3_to_country_name('88a819462bfffff');` -> `Brazil`.
-- `coordinates_to_country_iso (_latitude numeric, _longitude numeric) returns text`
-  - Description: Given a coordinate pair, returns the country ISO code that the point lies in.
-  - Example Usage: `SELECT coordinates_to_country_iso(24.4539, 54.3773);` -> `ARE`.
-- `coordinates_to_country_name (_latitude numeric, _longitude numeric) returns text`
-  - Description: Given a coordinate pair, returns the country name that the point lies in.
-  - Example Usage: `SELECT coordinates_to_country_name(24.4539, 54.3773);` -> `United Arab Emirates`.
-
 ## Getting Started
+Setup assumes that you already have write access to a Postgres database.
 1. Download the country borders dataset from [here](https://datahub.io/core/geo-countries/r/countries.geojson) [~23MB]. This GeoJSON file contains a list of polygons that define country boundaries.
 2. On your Postgres server, install the `postgis` extension and `pgxnclient` extension manager if not already:
    - `sudo apt-get install postgis pgxnclient`
@@ -33,4 +19,18 @@ Simple macros leverage `h3` and `postgis` extensions to enable common queries.
      - `country_name (text)`: The full country name, e.g. `United States of America`.
      - `country_iso (text)`: The country ISO A3 code, e.g. `USA`.
      - `geometry (geometry)`: The coordinates list defining the country borders as a polygon. This enables a variety of geospatial queries via `postgis`, e.g. `ST_CONTAINS`. 
-     
+
+## Functions
+Simple macros leverage `h3` and `postgis` extensions to enable common queries.
+- `h3_to_country_iso (_h3_index text) returns text`
+  - Description: Given an h3 index, returns the country ISO code that the hex centroid lies in.
+  - Example Usage: `SELECT h3_to_country_iso('88a819462bfffff');` -> `BRA`.
+- `h3_to_country_name (_h3_index text) returns text`
+  - Description: Given an h3 index, returns the country name that the hex centroid lies in.
+  - Example Usage: `SELECT h3_to_country_name('88a819462bfffff');` -> `Brazil`.
+- `coordinates_to_country_iso (_latitude numeric, _longitude numeric) returns text`
+  - Description: Given a coordinate pair, returns the country ISO code that the point lies in.
+  - Example Usage: `SELECT coordinates_to_country_iso(24.4539, 54.3773);` -> `ARE`.
+- `coordinates_to_country_name (_latitude numeric, _longitude numeric) returns text`
+  - Description: Given a coordinate pair, returns the country name that the point lies in.
+  - Example Usage: `SELECT coordinates_to_country_name(24.4539, 54.3773);` -> `United Arab Emirates`.
