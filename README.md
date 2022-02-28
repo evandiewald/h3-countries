@@ -4,7 +4,8 @@ Simple Postgres dataset and functions for mapping h3 indices or coordinates to c
 ![example-query](static/example-query.png)
 
 ## Getting Started
-Setup assumes that you already have write access to a Postgres database.
+The following instructions have been tested on Ubuntu 20.04 with Postgres 14. You may run into compatibility issues with older versions. 
+Setup assumes that you already have **superuser** access to a Postgres database. 
 1. On your Postgres server, install the `postgis` extension and `pgxnclient` extension manager if not already:
    - `sudo apt-get install postgis pgxnclient`
 2. Use [`pgxn`](https://pgxn.org/) to install the [Postgres h3 bindings](https://github.com/bytesandbrains/h3-pg):

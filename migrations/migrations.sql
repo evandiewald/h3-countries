@@ -57,6 +57,15 @@ returns text AS
     );
     $func$ LANGUAGE sql;
 
+CREATE OR REPLACE FUNCTION coordinates_to_country_numeric_code (_latitude numeric, _longitude numeric)
+returns integer AS
+    $func$
+    SELECT numeric_code FROM borders
+    WHERE ST_Contains(geometry,
+            ST_SetSRID(ST_MakePoint(_longitude, _latitude)::geometry, 4326)
+    );
+    $func$ LANGUAGE sql;
+
 CREATE OR REPLACE FUNCTION coordinates_to_country_iso_a2 (_latitude numeric, _longitude numeric)
 returns text AS
     $func$
