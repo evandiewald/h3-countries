@@ -1,5 +1,8 @@
 DROP TABLE IF EXISTS public.borders;
 
+CREATE EXTENSION IF NOT EXISTS postgis;
+CREATE EXTENSION IF NOT EXISTS h3;
+
 CREATE TABLE public.borders
 (
     country_name text,
@@ -8,9 +11,6 @@ CREATE TABLE public.borders
     numeric_code integer,
     geometry geometry
 );
-
-CREATE EXTENSION IF NOT EXISTS h3;
-CREATE EXTENSION IF NOT EXISTS postgis;
 
 CREATE OR REPLACE FUNCTION h3_to_country_iso_a3 (_h3_index text)
 returns text AS

@@ -4,12 +4,14 @@ Simple Postgres dataset and functions for mapping h3 indices or coordinates to c
 ![example-query](static/example-query.png)
 
 ## Getting Started
-The following instructions have been tested on Ubuntu 20.04 with Postgres 14. You may run into compatibility issues with older versions. 
+The following instructions have been tested on Ubuntu 20.04 with Postgres 12 **with server headers**. You may run into compatibility issues with older versions. 
 Setup assumes that you already have **superuser** access to a Postgres database. 
 1. On your Postgres server, install the `postgis` extension and `pgxnclient` extension manager if not already:
-   - `sudo apt-get install postgis pgxnclient`
+   - `sudo apt-get install postgis pgxnclient cmake make`
 2. Use [`pgxn`](https://pgxn.org/) to install the [Postgres h3 bindings](https://github.com/bytesandbrains/h3-pg):
    - `pgxn install h3`
+   
+   **Note:** If you see an error related to missing `<postgres.h>`, this means that you need to install the server headers for your version of postgres, e.g. `sudo apt-get install postgresql-server-dev-12`.
 3. Create a copy of `.env.template`, call it `.env`, and configure the application with your Postgres connection URL and the path to the countries GeoJSON dataset.
 4. Install dependencies:
    - `pip install -r requirements.txt`
