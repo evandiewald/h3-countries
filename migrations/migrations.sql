@@ -92,3 +92,33 @@ returns integer AS
             ST_SetSRID(ST_MakePoint(_longitude, _latitude)::geometry, 4326)
     );
     $func$ LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION h3_to_nearest_country_iso_a2 (_h3_index text)
+returns text AS
+    $func$
+    SELECT country_iso_a2
+    FROM borders
+    WHERE ST_DWithin(geometry, ST_SetSRID(h3_to_geo(_h3_index::h3index)::geometry, 4326), 1000)
+    ORDER BY ST_Distance(geometry, ST_SetSRID(h3_to_geo(_h3_index::h3index)::geometry, 4326))
+    LIMIT 1;
+    $func$ LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION h3_to_nearest_country_iso_a3 (_h3_index text)
+returns text AS
+    $func$
+    SELECT country_iso_a3
+    FROM borders
+    WHERE ST_DWithin(geometry, ST_SetSRID(h3_to_geo(_h3_index::h3index)::geometry, 4326), 1000)
+    ORDER BY ST_Distance(geometry, ST_SetSRID(h3_to_geo(_h3_index::h3index)::geometry, 4326))
+    LIMIT 1;
+    $func$ LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION h3_to_nearest_country_name (_h3_index text)
+returns text AS
+    $func$
+    SELECT country_name
+    FROM borders
+    WHERE ST_DWithin(geometry, ST_SetSRID(h3_to_geo(_h3_index::h3index)::geometry, 4326), 1000)
+    ORDER BY ST_Distance(geometry, ST_SetSRID(h3_to_geo(_h3_index::h3index)::geometry, 4326))
+    LIMIT 1;
+    $func$ LANGUAGE sql;
